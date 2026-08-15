@@ -3,7 +3,10 @@ import { flex, font, layout, screen, spacing, theme } from '@/styles';
 
 export const page = style([flex.COLUMN_FLEX, { gap: spacing.md }]);
 
-export const count = style([font.caption, { color: theme.textTertiary }]);
+export const count = style([
+  font.caption,
+  { color: theme.textTertiary, whiteSpace: 'nowrap', flexShrink: 0 },
+]);
 
 export const search = style([
   font.body,
@@ -93,6 +96,14 @@ export const contact = style([
     color: theme.textTertiary,
     justifyContent: 'flex-end',
     whiteSpace: 'nowrap',
+
+    '@media': {
+      [`(max-width: ${screen.tablet})`]: {
+        justifyContent: 'flex-start',
+        flexWrap: 'wrap',
+        whiteSpace: 'normal',
+      },
+    },
   },
 ]);
 
@@ -107,4 +118,9 @@ export const empty = style([
     textAlign: 'center',
     color: theme.textTertiary,
   },
+]);
+
+export const searchRow = style([
+  flex.VERTICAL,
+  { gap: spacing.sm, flex: 1, minWidth: 0 },
 ]);

@@ -7,12 +7,16 @@ import {
   ToolbarGroup,
 } from '@/components/common';
 import { FACULTY, RANK_LABEL } from '@/data';
+import { useMediaQuery } from '@/hooks';
+import { screen } from '@/styles';
 import type { FacultyRank } from '@/types';
 import * as s from './style.css';
 
 type RankFilter = FacultyRank | 'ALL';
 
 const RANK_ORDER: FacultyRank[] = ['PROFESSOR', 'ASSOCIATE', 'ASSISTANT'];
+
+const PHONE_QUERY = `(max-width: ${screen.phone})`;
 
 const FacultyPage = () => {
   const [rank, setRank] = useState<RankFilter>('ALL');
@@ -38,15 +42,18 @@ const FacultyPage = () => {
     });
   }, [rank, keyword]);
 
+  /* 폰에서는 결과 수를 따로 한 줄 잡지 않고 검색창 옆에 붙인다. */
+  const narrow = useMediaQuery(PHONE_QUERY);
+
+  const count = (
+    <span className={s.count}>
+      <CountUp value={`${filtered.length}명`} duration={420} />
+    </span>
+  );
+
   return (
     <div className={s.page}>
-      <Toolbar
-        trailing={
-          <span className={s.count}>
-            <CountUp value={`${filtered.length}명`} duration={420} />
-          </span>
-        }
-      >
+      <Toolbar trailing={narrow ? undefined : count}>
         <ToolbarGroup label="직위">
           <Chip selected={rank === 'ALL'} onClick={() => setRank('ALL')}>
             전체 {FACULTY.length}
@@ -62,14 +69,17 @@ const FacultyPage = () => {
           ))}
         </ToolbarGroup>
 
-        <input
-          className={s.search}
-          type="search"
-          value={keyword}
-          placeholder="이름·연구분야"
-          aria-label="교수 검색"
-          onChange={(event) => setKeyword(event.target.value)}
-        />
+        <div className={s.searchRow}>
+          <input
+            className={s.search}
+            type="search"
+            value={keyword}
+            placeholder="이름·연구분야"
+            aria-label="교수 검색"
+            onChange={(event) => setKeyword(event.target.value)}
+          />
+          {narrow && count}
+        </div>
       </Toolbar>
 
       <Section

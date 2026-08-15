@@ -1,4 +1,4 @@
-import { style } from '@vanilla-extract/css';
+import { globalStyle, style } from '@vanilla-extract/css';
 import {
   elevation,
   flex,
@@ -57,7 +57,14 @@ export const title = style([font.appTitle, { color: theme.textPrimary }]);
 
 export const subtitle = style([
   font.caption,
-  { marginTop: '2px', color: theme.textSecondary },
+  {
+    marginTop: '2px',
+    color: theme.textSecondary,
+
+    '@media': {
+      [`(max-width: ${screen.phone})`]: { display: 'none' },
+    },
+  },
 ]);
 
 export const nav = style({
@@ -66,6 +73,11 @@ export const nav = style({
   padding: '3px',
   borderRadius: layout.radius.pill,
   backgroundColor: theme.track,
+
+  scrollbarWidth: 'none',
+  selectors: {
+    '&::-webkit-scrollbar': { display: 'none' },
+  },
 
   '@media': {
     [`(max-width: ${screen.tablet})`]: {
@@ -78,6 +90,13 @@ export const nav = style({
 /* 내비게이션도 같은 칩 모양을 쓴다 — 선택 표시가 화면마다 달라지지 않게. */
 export const navLink = chip;
 export const navActive = selected;
+
+/* 좁은 화면에서는 세 칸이 폭을 나눠 갖는다. 왼쪽에 몰아두면 오른쪽이 빈 채로 남는다. */
+globalStyle(`${nav} > a`, {
+  '@media': {
+    [`(max-width: ${screen.tablet})`]: { flex: 1, justifyContent: 'center' },
+  },
+});
 
 export const main = style({
   flex: 1,

@@ -165,22 +165,37 @@ export const gridScroll = style({
 
 export const grid = style({
   minWidth: '900px',
+  width: 'max-content',
   display: 'flex',
   flexDirection: 'column',
   gap: '2px',
 });
 
 const rowTemplate = '150px repeat(6, minmax(0, 1fr))';
+const rowTemplateNarrow = '104px repeat(6, minmax(0, 1fr))';
 
 export const gridHead = style({
   display: 'grid',
   gridTemplateColumns: rowTemplate,
   gap: '2px',
+
+  '@media': {
+    [`(max-width: ${screen.phone})`]: {
+      gridTemplateColumns: rowTemplateNarrow,
+    },
+  },
 });
 
 export const moduleHead = style([
   font.caption,
-  { padding: `6px ${spacing.sm}`, color: theme.textTertiary },
+  {
+    position: 'sticky',
+    left: 0,
+    zIndex: 1,
+    padding: `6px ${spacing.sm}`,
+    backgroundColor: theme.surface,
+    color: theme.textTertiary,
+  },
 ]);
 
 export const termHead = style([
@@ -199,16 +214,27 @@ export const gridRow = style({
   gridTemplateColumns: rowTemplate,
   gap: '2px',
   alignItems: 'stretch',
+
+  '@media': {
+    [`(max-width: ${screen.phone})`]: {
+      gridTemplateColumns: rowTemplateNarrow,
+    },
+  },
 });
 
+/** 가로로 밀어도 어느 모듈 줄을 보고 있는지 놓치지 않게 왼쪽에 붙여 둔다. */
 export const moduleCell = style([
   flex.COLUMN_FLEX,
   {
+    position: 'sticky',
+    left: 0,
+    zIndex: 1,
     justifyContent: 'center',
     gap: '2px',
     padding: `8px ${spacing.sm}`,
     borderRadius: '4px',
     backgroundColor: theme.background,
+    boxShadow: `1px 0 0 ${theme.outline}`,
   },
 ]);
 
@@ -482,3 +508,31 @@ export const empty = style([
     textAlign: 'center',
   },
 ]);
+
+/* 폰 전용 조작 줄 — 칩 대신 셀렉트로 줄 수를 줄인다. */
+
+export const selectRow = style([flex.VERTICAL, { gap: '6px', width: '100%' }]);
+
+const control = style([
+  font.label,
+  {
+    minWidth: 0,
+    height: '34px',
+    padding: '0 10px',
+    borderRadius: layout.radius.pill,
+    backgroundColor: theme.track,
+    color: theme.textPrimary,
+    fontWeight: 600,
+    appearance: 'none',
+    backgroundImage:
+      'linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%)',
+    backgroundPosition: 'right 14px center, right 9px center',
+    backgroundSize: '5px 5px, 5px 5px',
+    backgroundRepeat: 'no-repeat',
+    paddingRight: '26px',
+  },
+]);
+
+export const select = style([control, { flex: 1 }]);
+
+export const jump = style([control, { flexShrink: 0, color: theme.accent }]);

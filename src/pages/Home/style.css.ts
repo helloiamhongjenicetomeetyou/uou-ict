@@ -17,7 +17,10 @@ export const statGrid = style({
     [`(max-width: ${screen.tablet})`]: {
       gridTemplateColumns: 'repeat(2, 1fr)',
     },
-    [`(max-width: ${screen.mobile})`]: { gridTemplateColumns: '1fr' },
+    [`(max-width: ${screen.mobile})`]: {
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gap: '6px',
+    },
   },
 });
 

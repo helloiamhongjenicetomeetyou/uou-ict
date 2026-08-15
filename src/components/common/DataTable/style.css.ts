@@ -18,6 +18,22 @@ globalStyle(`${table} th, ${table} td`, {
   whiteSpace: 'nowrap',
 });
 
+globalStyle(`${table} th, ${table} td`, {
+  '@media': {
+    [`(max-width: ${screen.phone})`]: { padding: `8px ${spacing.sm}` },
+  },
+});
+
+/* 긴 교과목명 하나 때문에 표 전체가 가로로 밀리느니 두 줄로 접는 편이 낫다. */
+globalStyle(`${table} tbody th`, {
+  '@media': {
+    [`(max-width: ${screen.phone})`]: {
+      whiteSpace: 'normal',
+      lineHeight: '135%',
+    },
+  },
+});
+
 globalStyle(`${table} thead th`, {
   ...font.caption,
   paddingBottom: '6px',

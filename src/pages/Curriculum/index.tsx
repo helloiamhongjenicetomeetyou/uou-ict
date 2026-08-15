@@ -21,6 +21,8 @@ import type {
   OfficialCourse,
   TrackId,
 } from '@/types';
+import { useMediaQuery } from '@/hooks';
+import { screen } from '@/styles';
 import { scrollToSection } from '@/utils';
 import CourseChip from './CourseChip';
 import * as s from './style.css';
@@ -56,6 +58,8 @@ const TYPE_LABEL: Record<EnrollmentType, string> = {
 };
 
 const TYPE_FILTERS: EnrollmentType[] = ['전필', '전선', '교필', '교선'];
+
+const PHONE_QUERY = `(max-width: ${screen.phone})`;
 
 const TRACK_IDS = new Set<string>(TRACKS.map((track) => track.id));
 
@@ -148,80 +152,140 @@ const CurriculumPage = () => {
 
   const firstYearCredits = firstYear.reduce((sum, c) => sum + c.credits, 0);
 
+  /* 폰에서는 칩 묶음 네 개가 여섯 줄을 잡아먹는다. 고르는 일은 셀렉트에 맡긴다. */
+  const narrow = useMediaQuery(PHONE_QUERY);
+
+  const typeChips = (
+    <ToolbarGroup label="이수구분">
+      <Chip
+        selected={typeFilter === 'ALL'}
+        onClick={() => setTypeFilter('ALL')}
+      >
+        전체
+      </Chip>
+      {TYPE_FILTERS.map((type) => (
+        <Chip
+          key={type}
+          selected={typeFilter === type}
+          title={TYPE_LABEL[type]}
+          onClick={() => setTypeFilter(type)}
+        >
+          {type}
+        </Chip>
+      ))}
+    </ToolbarGroup>
+  );
+
+  const search = (
+    <input
+      className={s.search}
+      type="search"
+      value={keyword}
+      placeholder="과목명·과목코드"
+      aria-label="교과목 검색"
+      onChange={(event) => setKeyword(event.target.value)}
+    />
+  );
+
   return (
     <div className={s.page}>
-      <Toolbar
-        sticky
-        trailing={
-          <span className={s.stamp}>
-            UWINS {OFFICIAL_CURRICULUM.source.year}학년도 기준
-          </span>
-        }
-      >
-        <ToolbarGroup label="트랙">
-          {TRACKS.map((item) => (
-            <Chip
-              key={item.id}
-              selected={item.id === trackId}
-              onClick={() => select({ track: item.id })}
+      {narrow ? (
+        <Toolbar sticky>
+          <div className={s.selectRow}>
+            <select
+              className={s.select}
+              value={trackId}
+              aria-label="트랙"
+              onChange={(e) => select({ track: e.target.value as TrackId })}
             >
-              {item.name}
-            </Chip>
-          ))}
-        </ToolbarGroup>
+              {TRACKS.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
 
-        <ToolbarGroup label="유형">
-          {(['기본', '통합'] as const).map((v) => (
-            <Chip
-              key={v}
-              selected={v === variant}
-              onClick={() => select({ variant: v })}
+            <select
+              className={s.select}
+              value={variant}
+              aria-label="트랙 유형"
+              onChange={(e) => select({ variant: e.target.value as Variant })}
             >
-              {v}트랙
-            </Chip>
-          ))}
-        </ToolbarGroup>
+              <option value="기본">기본트랙</option>
+              <option value="통합">통합트랙</option>
+            </select>
+          </div>
 
-        <input
-          className={s.search}
-          type="search"
-          value={keyword}
-          placeholder="과목명·과목코드"
-          aria-label="교과목 검색"
-          onChange={(event) => setKeyword(event.target.value)}
-        />
-
-        <ToolbarGroup label="이수구분">
-          <Chip
-            selected={typeFilter === 'ALL'}
-            onClick={() => setTypeFilter('ALL')}
-          >
-            전체
-          </Chip>
-          {TYPE_FILTERS.map((type) => (
-            <Chip
-              key={type}
-              selected={typeFilter === type}
-              title={TYPE_LABEL[type]}
-              onClick={() => setTypeFilter(type)}
+          <div className={s.selectRow}>
+            {search}
+            <select
+              className={s.jump}
+              value=""
+              aria-label="바로가기"
+              onChange={(e) =>
+                e.target.value && scrollToSection(e.target.value)
+              }
             >
-              {type}
-            </Chip>
-          ))}
-        </ToolbarGroup>
+              <option value="">바로가기</option>
+              {ANCHORS.map((anchor) => (
+                <option key={anchor.id} value={anchor.id}>
+                  {anchor.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <ToolbarGroup label="바로가기">
-          {ANCHORS.map((anchor) => (
-            <Chip
-              key={anchor.id}
-              title={`${anchor.label} 위치로 이동`}
-              onClick={() => scrollToSection(anchor.id)}
-            >
-              {anchor.label}
-            </Chip>
-          ))}
-        </ToolbarGroup>
-      </Toolbar>
+          {typeChips}
+        </Toolbar>
+      ) : (
+        <Toolbar
+          sticky
+          trailing={
+            <span className={s.stamp}>
+              UWINS {OFFICIAL_CURRICULUM.source.year}학년도 기준
+            </span>
+          }
+        >
+          <ToolbarGroup label="트랙">
+            {TRACKS.map((item) => (
+              <Chip
+                key={item.id}
+                selected={item.id === trackId}
+                onClick={() => select({ track: item.id })}
+              >
+                {item.name}
+              </Chip>
+            ))}
+          </ToolbarGroup>
+
+          <ToolbarGroup label="유형">
+            {(['기본', '통합'] as const).map((v) => (
+              <Chip
+                key={v}
+                selected={v === variant}
+                onClick={() => select({ variant: v })}
+              >
+                {v}트랙
+              </Chip>
+            ))}
+          </ToolbarGroup>
+
+          {search}
+          {typeChips}
+
+          <ToolbarGroup label="바로가기">
+            {ANCHORS.map((anchor) => (
+              <Chip
+                key={anchor.id}
+                title={`${anchor.label} 위치로 이동`}
+                onClick={() => scrollToSection(anchor.id)}
+              >
+                {anchor.label}
+              </Chip>
+            ))}
+          </ToolbarGroup>
+        </Toolbar>
+      )}
 
       <Section
         id="first-year"
@@ -238,17 +302,20 @@ const CurriculumPage = () => {
         {firstYearRows.length === 0 ? (
           <p className={s.empty}>검색 조건에 맞는 과목이 없습니다.</p>
         ) : (
-          <DataTable caption="ICT융합학부 1학년 학부 공통과정" minWidth={680}>
+          <DataTable
+            caption="ICT융합학부 1학년 학부 공통과정"
+            minWidth={narrow ? 320 : 680}
+          >
             <thead>
               <tr>
                 <th scope="col">학기</th>
                 <th scope="col">이수구분</th>
-                <th scope="col">과목코드</th>
+                {!narrow && <th scope="col">과목코드</th>}
                 <th scope="col">교과목명</th>
                 <th scope="col" className={numericCell}>
                   학점
                 </th>
-                <th scope="col">ABEEK</th>
+                {!narrow && <th scope="col">ABEEK</th>}
               </tr>
             </thead>
             <tbody>
@@ -260,10 +327,12 @@ const CurriculumPage = () => {
                       {TYPE_LABEL[course.type]}
                     </span>
                   </td>
-                  <td className={s.code}>{course.code}</td>
+                  {!narrow && <td className={s.code}>{course.code}</td>}
                   <th scope="row">{course.name}</th>
                   <td className={numericCell}>{course.credits}</td>
-                  <td className={s.abeek}>{course.abeek || '—'}</td>
+                  {!narrow && (
+                    <td className={s.abeek}>{course.abeek || '—'}</td>
+                  )}
                 </tr>
               ))}
             </tbody>
@@ -299,18 +368,18 @@ const CurriculumPage = () => {
           ) : (
             <DataTable
               caption={`${track.name} ${variant}트랙 개설 교과목`}
-              minWidth={680}
+              minWidth={narrow ? 320 : 680}
             >
               <thead>
                 <tr>
                   <th scope="col">학년-학기</th>
                   <th scope="col">이수구분</th>
-                  <th scope="col">과목코드</th>
+                  {!narrow && <th scope="col">과목코드</th>}
                   <th scope="col">교과목명</th>
                   <th scope="col" className={numericCell}>
                     학점
                   </th>
-                  <th scope="col">ABEEK</th>
+                  {!narrow && <th scope="col">ABEEK</th>}
                 </tr>
               </thead>
               <tbody>
@@ -324,10 +393,12 @@ const CurriculumPage = () => {
                         {TYPE_LABEL[course.type]}
                       </span>
                     </td>
-                    <td className={s.code}>{course.code}</td>
+                    {!narrow && <td className={s.code}>{course.code}</td>}
                     <th scope="row">{course.name}</th>
                     <td className={numericCell}>{course.credits}</td>
-                    <td className={s.abeek}>{course.abeek || '—'}</td>
+                    {!narrow && (
+                      <td className={s.abeek}>{course.abeek || '—'}</td>
+                    )}
                   </tr>
                 ))}
               </tbody>
