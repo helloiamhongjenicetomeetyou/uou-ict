@@ -448,56 +448,112 @@ const CurriculumPage = () => {
 
         {track.note && <p className={s.trackNote}>{track.note}</p>}
 
-        <div className={s.gridScroll}>
-          <div className={s.grid}>
-            <div className={s.gridHead}>
-              <span className={s.moduleHead}>모듈</span>
-              {TERMS.map((term) => (
-                <span
-                  key={`${term.year}-${term.semester}`}
-                  className={s.termHead}
-                >
-                  {term.year}학년 {term.semester}학기
-                </span>
-              ))}
-            </div>
+        {narrow ? (
+          <div className={s.moduleList}>
+            {track.modules.map((module) => {
+              const courses = track.courses
+                .filter((c) => c.module === module.name)
+                .sort((a, b) => a.year - b.year || a.semester - b.semester);
+              if (courses.length === 0) return null;
 
-            {track.modules.map((module) => (
-              <div key={module.name} className={s.gridRow}>
-                <div className={s.moduleCell}>
-                  <span className={s.moduleName}>{module.name}</span>
-                  {module.credits != null && (
-                    <span className={s.moduleCredits}>
-                      {module.credits}학점
-                    </span>
-                  )}
+              return (
+                <div key={module.name} className={s.moduleBlock}>
+                  <div className={s.moduleBlockHead}>
+                    <span className={s.moduleName}>{module.name}</span>
+                    {module.credits != null && (
+                      <span className={s.moduleCredits}>
+                        {module.credits}학점
+                      </span>
+                    )}
+                  </div>
+
                   {module.jobs && (
                     <span className={s.moduleMeta}>
                       {module.jobs.join(' · ')}
                     </span>
                   )}
-                </div>
 
+                  <ul className={s.moduleCourses}>
+                    {courses.map((course, index) => (
+                      <li
+                        key={`${course.name}-${index}`}
+                        className={s.course}
+                        data-category={course.category}
+                      >
+                        <span className={s.courseTerm}>
+                          {course.year}-{course.semester}
+                        </span>
+                        <span className={s.courseName}>{course.name}</span>
+                        {!track.creditsUnknown && course.credits != null && (
+                          <span className={s.courseCredit}>
+                            {course.credits}
+                          </span>
+                        )}
+                        {course.baseTrack && (
+                          <span
+                            className={s.courseDot}
+                            aria-label="기본트랙 과목"
+                          />
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className={s.gridScroll}>
+            <div className={s.grid}>
+              <div className={s.gridHead}>
+                <span className={s.moduleHead}>모듈</span>
                 {TERMS.map((term) => (
-                  <div
+                  <span
                     key={`${term.year}-${term.semester}`}
-                    className={s.termCell}
+                    className={s.termHead}
                   >
-                    {cell(module.name, term.year, term.semester).map(
-                      (course, index) => (
-                        <CourseChip
-                          key={`${course.name}-${index}`}
-                          course={course}
-                          showCredits={!track.creditsUnknown}
-                        />
-                      ),
-                    )}
-                  </div>
+                    {term.year}학년 {term.semester}학기
+                  </span>
                 ))}
               </div>
-            ))}
+
+              {track.modules.map((module) => (
+                <div key={module.name} className={s.gridRow}>
+                  <div className={s.moduleCell}>
+                    <span className={s.moduleName}>{module.name}</span>
+                    {module.credits != null && (
+                      <span className={s.moduleCredits}>
+                        {module.credits}학점
+                      </span>
+                    )}
+                    {module.jobs && (
+                      <span className={s.moduleMeta}>
+                        {module.jobs.join(' · ')}
+                      </span>
+                    )}
+                  </div>
+
+                  {TERMS.map((term) => (
+                    <div
+                      key={`${term.year}-${term.semester}`}
+                      className={s.termCell}
+                    >
+                      {cell(module.name, term.year, term.semester).map(
+                        (course, index) => (
+                          <CourseChip
+                            key={`${course.name}-${index}`}
+                            course={course}
+                            showCredits={!track.creditsUnknown}
+                          />
+                        ),
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {track.modules.some((m) => m.certificates) && (
           <div className={s.certList}>

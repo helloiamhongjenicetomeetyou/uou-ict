@@ -536,3 +536,34 @@ const control = style([
 export const select = style([control, { flex: 1 }]);
 
 export const jump = style([control, { flexShrink: 0, color: theme.accent }]);
+
+/* 폰 전용 이수체계도 — 6×N 격자는 빈 칸이 너무 많아 모듈별 목록으로 편다. */
+
+export const moduleList = style([flex.COLUMN_FLEX, { gap: spacing.sm }]);
+
+export const moduleBlock = style([
+  flex.COLUMN_FLEX,
+  {
+    gap: '6px',
+    padding: spacing.sm,
+    borderRadius: layout.radius.sm,
+    backgroundColor: theme.background,
+  },
+]);
+
+export const moduleBlockHead = style([
+  flex.VERTICAL,
+  { gap: spacing.sm, flexWrap: 'wrap' },
+]);
+
+export const moduleCourses = style([flex.COLUMN_FLEX, { gap: '4px' }]);
+
+export const courseTerm = style([
+  font.caption,
+  {
+    flexShrink: 0,
+    minWidth: '24px',
+    color: theme.textTertiary,
+    fontVariantNumeric: 'tabular-nums',
+  },
+]);
