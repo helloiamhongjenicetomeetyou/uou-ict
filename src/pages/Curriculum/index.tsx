@@ -5,7 +5,6 @@ import {
   DataTable,
   numericCell,
   Section,
-  StatCard,
   Toolbar,
   ToolbarGroup,
 } from '@/components/common';
@@ -15,7 +14,6 @@ import {
   TRACKS,
   TRACK_RULES,
 } from '@/data';
-import { useCompletedCourses } from '@/hooks';
 import type {
   Course,
   CourseCategory,
@@ -35,7 +33,6 @@ type TypeFilter = EnrollmentType | 'ALL';
  * 트랙을 바꾼 다음 어디를 봐야 하는지 매번 스크롤로 찾게 된다.
  */
 const ANCHORS = [
-  { id: 'progress', label: '내 이수' },
   { id: 'first-year', label: '1학년' },
   { id: 'courses', label: '개설 교과목' },
   { id: 'roadmap', label: '이수체계도' },
@@ -64,25 +61,6 @@ const TYPE_LABEL: Record<EnrollmentType, string> = {
 
 const TYPE_FILTERS: EnrollmentType[] = ['전필', '전선', '교필', '교선'];
 
-/** 전공으로 세는 이수구분. 나머지(교필·교선)는 교양으로 센다. */
-const MAJOR_TYPES: EnrollmentType[] = ['전필', '전선'];
-
-/** 트랙 이수학점. 공통트랙소개 기준 — 기본트랙 33학점, 통합트랙 66학점. */
-const TRACK_CREDITS: Record<Variant, number> = { 기본: 33, 통합: 66 };
-
-/**
- * 과목코드 → 과목.
- * 체크한 과목의 학점을 세려면 지금 보고 있는 트랙 밖의 과목도 알아야 한다.
- * 같은 과목이 여러 트랙에 겹쳐 나오므로 먼저 만난 것 하나만 남긴다.
- */
-const COURSE_BY_CODE = new Map<string, OfficialCourse>();
-for (const course of [
-  ...OFFICIAL_CURRICULUM.common,
-  ...OFFICIAL_CURRICULUM.tracks.flatMap((track) => track.courses),
-]) {
-  if (!COURSE_BY_CODE.has(course.code)) COURSE_BY_CODE.set(course.code, course);
-}
-
 const TRACK_IDS = new Set<string>(TRACKS.map((track) => track.id));
 
 const asTrackId = (value: string | null): TrackId =>
@@ -102,7 +80,6 @@ const CurriculumPage = () => {
 
   const [keyword, setKeyword] = useState('');
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('ALL');
-  const { completed, toggle, clear } = useCompletedCourses();
 
   const track = TRACKS.find((t) => t.id === trackId) ?? TRACKS[0];
   const official = OFFICIAL_CURRICULUM.tracks.find(
@@ -168,46 +145,12 @@ const CurriculumPage = () => {
     return counts;
   }, [track]);
 
-  /** 체크한 과목을 전공·교양으로 나눠 학점을 센다. */
-  const progress = useMemo(() => {
-    let major = 0;
-    let general = 0;
-    let count = 0;
-
-    for (const code of completed) {
-      const course = COURSE_BY_CODE.get(code);
-      if (!course) continue;
-
-      count += 1;
-      if (MAJOR_TYPES.includes(course.type)) major += course.credits;
-      else general += course.credits;
-    }
-
-    return { major, general, count };
-  }, [completed]);
-
   const cell = (module: string, year: number, semester: number): Course[] =>
     track.courses.filter(
       (c) => c.module === module && c.year === year && c.semester === semester,
     );
 
   const firstYearCredits = firstYear.reduce((sum, c) => sum + c.credits, 0);
-  const majorTarget = TRACK_CREDITS[variant];
-  const generalTarget = GENERAL_EDUCATION.totalCredits;
-
-  const ratio = (value: number, target: number) =>
-    Math.min(Math.round((value / target) * 100), 100);
-
-  /** 체크 칸 하나. 두 표가 같은 모양을 쓴다. */
-  const checkbox = (course: OfficialCourse) => (
-    <input
-      type="checkbox"
-      className={s.check}
-      checked={completed.has(course.code)}
-      onChange={() => toggle(course.code)}
-      aria-label={`${course.name} 이수 완료`}
-    />
-  );
 
   return (
     <div className={s.page}>
@@ -284,68 +227,6 @@ const CurriculumPage = () => {
         </ToolbarGroup>
       </Toolbar>
 
-      {/* ── 내 이수 현황 ──────────────────────────────────────── */}
-      <Section
-        id="progress"
-        title="내 이수 현황"
-        note="이 브라우저에만 저장됩니다"
-        action={
-          progress.count > 0 && (
-            <button type="button" className={s.reset} onClick={clear}>
-              체크 초기화
-            </button>
-          )
-        }
-      >
-        <p className={s.hint}>
-          아래 표에서 들은 과목을 체크하면 학점이 더해집니다. 계정도 서버도 없이{' '}
-          <b>이 브라우저에만</b> 남고, 아직 개설되지 않은 3·4학년 과목은 표에
-          없으므로 지금 셀 수 있는 건 1·2학년 개설 과목까지입니다.
-        </p>
-
-        <div className={s.progressGrid}>
-          <StatCard label="체크한 과목" value={`${progress.count}과목`} />
-          <StatCard
-            label="전공 학점"
-            value={`${progress.major}학점`}
-            hint={`${variant}트랙 ${majorTarget}학점 기준`}
-          />
-          <StatCard
-            label="교양 학점"
-            value={`${progress.general}학점`}
-            hint={`졸업 교양 ${generalTarget}학점 기준`}
-          />
-        </div>
-
-        <div className={s.meterList}>
-          <div className={s.meterRow}>
-            <span className={s.meterLabel}>전공</span>
-            <span className={s.meter}>
-              <span
-                className={s.meterFill}
-                style={{ width: `${ratio(progress.major, majorTarget)}%` }}
-              />
-            </span>
-            <span className={s.meterValue}>
-              {progress.major} / {majorTarget}
-            </span>
-          </div>
-
-          <div className={s.meterRow}>
-            <span className={s.meterLabel}>교양</span>
-            <span className={s.meter}>
-              <span
-                className={s.meterFill}
-                style={{ width: `${ratio(progress.general, generalTarget)}%` }}
-              />
-            </span>
-            <span className={s.meterValue}>
-              {progress.general} / {generalTarget}
-            </span>
-          </div>
-        </div>
-      </Section>
-
       {/* ── 1학년 ─────────────────────────────────────────────── */}
       <Section
         id="first-year"
@@ -362,12 +243,9 @@ const CurriculumPage = () => {
         {firstYearRows.length === 0 ? (
           <p className={s.empty}>검색 조건에 맞는 과목이 없습니다.</p>
         ) : (
-          <DataTable caption="ICT융합학부 1학년 학부 공통과정" minWidth={720}>
+          <DataTable caption="ICT융합학부 1학년 학부 공통과정" minWidth={680}>
             <thead>
               <tr>
-                <th scope="col" className={s.checkHead}>
-                  이수
-                </th>
                 <th scope="col">학기</th>
                 <th scope="col">이수구분</th>
                 <th scope="col">과목코드</th>
@@ -380,11 +258,7 @@ const CurriculumPage = () => {
             </thead>
             <tbody>
               {firstYearRows.map((course) => (
-                <tr
-                  key={course.code}
-                  data-done={completed.has(course.code) ? '' : undefined}
-                >
-                  <td className={s.checkCell}>{checkbox(course)}</td>
+                <tr key={course.code}>
                   <td>{course.sem}학기</td>
                   <td>
                     <span className={s.typeTag} data-type={course.type}>
@@ -431,13 +305,10 @@ const CurriculumPage = () => {
           ) : (
             <DataTable
               caption={`${track.name} ${variant}트랙 개설 교과목`}
-              minWidth={720}
+              minWidth={680}
             >
               <thead>
                 <tr>
-                  <th scope="col" className={s.checkHead}>
-                    이수
-                  </th>
                   <th scope="col">학년-학기</th>
                   <th scope="col">이수구분</th>
                   <th scope="col">과목코드</th>
@@ -450,11 +321,7 @@ const CurriculumPage = () => {
               </thead>
               <tbody>
                 {officialRows.map((course) => (
-                  <tr
-                    key={`${course.code}-${course.year}-${course.sem}`}
-                    data-done={completed.has(course.code) ? '' : undefined}
-                  >
-                    <td className={s.checkCell}>{checkbox(course)}</td>
+                  <tr key={`${course.code}-${course.year}-${course.sem}`}>
                     <td>
                       {course.year}-{course.sem}
                     </td>
