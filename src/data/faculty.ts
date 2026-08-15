@@ -11,7 +11,6 @@ import type { FacultyMember } from '@/types';
  * 빈 배열은 "없음"이 아니라 "공개 안 됨"이다 — 화면에서도 그렇게 표시한다.
  */
 export const FACULTY: FacultyMember[] = [
-  /* 교수 */
   {
     name: '권영근',
     rank: 'PROFESSOR',
@@ -105,7 +104,6 @@ export const FACULTY: FacultyMember[] = [
     email: 'smchoo@ulsan.ac.kr',
   },
 
-  /* 부교수 */
   {
     name: '이수동',
     rank: 'ASSOCIATE',
@@ -131,7 +129,6 @@ export const FACULTY: FacultyMember[] = [
     tel: '052-259-2175',
   },
 
-  /* 조교수 */
   {
     name: '고동현',
     rank: 'ASSISTANT',

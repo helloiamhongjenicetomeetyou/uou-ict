@@ -18,7 +18,6 @@ globalStyle(`${table} th, ${table} td`, {
   whiteSpace: 'nowrap',
 });
 
-/* 헤더는 배경을 깔지 않고 글자만 작게 — 표가 블록처럼 무거워지지 않게. */
 globalStyle(`${table} thead th`, {
   ...font.caption,
   paddingBottom: '6px',
@@ -47,7 +46,6 @@ export const caption = style({
   border: 0,
 });
 
-/** 숫자 열 — 오른쪽 정렬 + 고정폭 숫자로 자리수를 맞춘다. */
 export const numeric = style({
   textAlign: 'right',
   fontVariantNumeric: 'tabular-nums',

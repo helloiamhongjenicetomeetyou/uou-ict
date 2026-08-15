@@ -30,7 +30,6 @@ export const TRACKS: Track[] = [
       { name: '산업융합 모듈', credits: 14 },
     ],
     courses: [
-      /* 기초 프로그래밍 모듈 */
       {
         name: '객체지향 프로그래밍',
         credits: 3,
@@ -58,7 +57,6 @@ export const TRACKS: Track[] = [
         baseTrack: true,
         module: '기초 프로그래밍 모듈',
       },
-      /* 컴퓨터 시스템 모듈 */
       {
         name: '논리회로',
         credits: 3,
@@ -86,7 +84,6 @@ export const TRACKS: Track[] = [
         baseTrack: true,
         module: '컴퓨터 시스템 모듈',
       },
-      /* 시스템 프로그래밍 */
       {
         name: '기초 시스템 프로그래밍',
         credits: 3,
@@ -114,7 +111,6 @@ export const TRACKS: Track[] = [
         baseTrack: true,
         module: '시스템 프로그래밍',
       },
-      /* 빅데이터 모듈 */
       {
         name: '데이터 사이언스',
         credits: 3,
@@ -151,7 +147,6 @@ export const TRACKS: Track[] = [
         baseTrack: true,
         module: '빅데이터 모듈',
       },
-      /* Fundamental AI 모듈 */
       {
         name: '인공지능',
         credits: 3,
@@ -179,7 +174,6 @@ export const TRACKS: Track[] = [
         baseTrack: true,
         module: 'Fundamental AI 모듈',
       },
-      /* 응용 S/W모듈 */
       {
         name: '모바일 프로그래밍',
         credits: 3,
@@ -220,7 +214,6 @@ export const TRACKS: Track[] = [
         category: '전공선택',
         module: '응용 S/W모듈',
       },
-      /* 모바일 / IOT모듈 */
       {
         name: '데이터 통신',
         credits: 3,
@@ -253,7 +246,6 @@ export const TRACKS: Track[] = [
         category: '전공선택',
         module: '모바일 / IOT모듈',
       },
-      /* 영상/메타버스 모듈 */
       {
         name: '영상정보처리',
         credits: 3,
@@ -286,7 +278,6 @@ export const TRACKS: Track[] = [
         category: '전공선택',
         module: '영상/메타버스 모듈',
       },
-      /* 산업융합 모듈 */
       {
         name: '전공상담 I',
         credits: 0,

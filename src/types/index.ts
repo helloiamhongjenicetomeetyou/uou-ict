@@ -1,10 +1,3 @@
-/**
- * 이 서비스의 도메인 타입.
- *
- * 값은 전부 공식 홈페이지·공시에서 확인해 `src/data/` 에 적어둔 실제 값이다.
- * 지어낸 샘플 값은 두지 않는다. 모르는 값은 null 로 두고 화면에 '—' 로 찍는다.
- */
-
 export type FacultyRank = 'PROFESSOR' | 'ASSOCIATE' | 'ASSISTANT';
 
 export interface FacultyMember {
@@ -27,8 +20,6 @@ export interface TuitionRecord {
   datasetId: string;
   baseDate: string;
 }
-
-/* ── 교육과정 ──────────────────────────────────────────────────── */
 
 export type TrackId = 'CSE' | 'AI' | 'IICT' | 'SAFETY' | 'MATH';
 

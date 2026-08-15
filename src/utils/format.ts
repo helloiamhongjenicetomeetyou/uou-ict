@@ -1,4 +1,4 @@
-/** 값이 없을 때 표에 찍는 문자. 0 과 구분하기 위해 반드시 이걸 쓴다. */
+/** 값이 없을 때 찍는 문자. 0 과 구분하려고 반드시 이걸 쓴다. */
 export const EMPTY_MARK = '—';
 
 const nf = new Intl.NumberFormat('ko-KR');
@@ -6,10 +6,6 @@ const nf = new Intl.NumberFormat('ko-KR');
 export const formatNumber = (value: number | null | undefined): string =>
   value == null || Number.isNaN(value) ? EMPTY_MARK : nf.format(value);
 
-/**
- * 금액을 읽기 쉬운 단위로 줄인다.
- * 등록금은 백만 단위라 원 단위로 찍으면 자리수만 길고 읽히지 않는다.
- */
 export const formatWon = (value: number | null | undefined): string => {
   if (value == null || Number.isNaN(value)) return EMPTY_MARK;
 

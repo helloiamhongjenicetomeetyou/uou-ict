@@ -57,7 +57,6 @@ export const heading = style([
 
 export const title = style([font.sectionTitle, { color: theme.textPrimary }]);
 
-/** 제목 옆 한 줄 메모. 문단이 아니라 조건 표시용. */
 export const note = style([font.caption, { color: theme.textTertiary }]);
 
 export const action = style([

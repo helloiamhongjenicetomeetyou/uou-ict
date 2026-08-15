@@ -28,10 +28,6 @@ import * as s from './style.css';
 type Variant = '기본' | '통합';
 type TypeFilter = EnrollmentType | 'ALL';
 
-/**
- * 바로가기 목록. 이 화면은 표 다섯 개가 세로로 길게 이어져서
- * 트랙을 바꾼 다음 어디를 봐야 하는지 매번 스크롤로 찾게 된다.
- */
 const ANCHORS = [
   { id: 'first-year', label: '1학년' },
   { id: 'courses', label: '개설 교과목' },
@@ -73,7 +69,7 @@ const sortCourses = (a: OfficialCourse, b: OfficialCourse) =>
   a.year - b.year || a.sem - b.sem || a.type.localeCompare(b.type);
 
 const CurriculumPage = () => {
-  /** 트랙·유형은 주소에 담는다 — 새로고침해도, 링크를 받아도 같은 화면이 열린다. */
+  /** 트랙·유형을 주소에 담아 새로고침·링크 공유에도 같은 화면이 열리게 한다. */
   const [params, setParams] = useSearchParams();
   const trackId = asTrackId(params.get('track'));
   const variant = asVariant(params.get('variant'));
@@ -92,7 +88,7 @@ const CurriculumPage = () => {
       if (next.track) merged.set('track', next.track);
       if (next.variant) merged.set('variant', next.variant);
 
-      /* replace 로 넣는다 — 트랙을 몇 번 눌렀다고 뒤로가기가 그만큼 쌓이면 곤란하다. */
+      /* replace — 트랙을 누른 횟수만큼 뒤로가기가 쌓이면 곤란하다. */
       setParams(merged, { replace: true });
       scrollToSection('courses');
     },
@@ -227,7 +223,6 @@ const CurriculumPage = () => {
         </ToolbarGroup>
       </Toolbar>
 
-      {/* ── 1학년 ─────────────────────────────────────────────── */}
       <Section
         id="first-year"
         title="1학년 · 학부 공통과정"
@@ -276,7 +271,6 @@ const CurriculumPage = () => {
         )}
       </Section>
 
-      {/* ── 2학년~ 실제 개설 ──────────────────────────────────── */}
       <Section
         id="courses"
         title={`${track.name} ${variant}트랙 · 개설 교과목`}
@@ -341,7 +335,6 @@ const CurriculumPage = () => {
           ))}
       </Section>
 
-      {/* ── 2~4학년 이수체계도 (계획) ─────────────────────────── */}
       <Section
         id="roadmap"
         title={`${track.name} 트랙 이수체계도`}
@@ -451,7 +444,6 @@ const CurriculumPage = () => {
         )}
       </Section>
 
-      {/* ── 교양 ──────────────────────────────────────────────── */}
       <Section
         id="general"
         title="교양"
@@ -496,7 +488,6 @@ const CurriculumPage = () => {
           ))}
       </Section>
 
-      {/* ── 이수 규정 ─────────────────────────────────────────── */}
       <Section id="rules" title="트랙 이수 규정" note="공통트랙소개">
         <div className={s.ruleGrid}>
           {[TRACK_RULES.base, TRACK_RULES.advanced, TRACK_RULES.integrated].map(

@@ -4,20 +4,10 @@ import { NAV_ITEMS, ROUTES } from '@/constants';
 import { ScrollTopButton } from '@/components/common';
 import * as s from './style.css';
 
-/**
- * 앱 껍데기.
- *
- * 제목·설명은 여기 한 번만 나오고, 각 화면은 곧바로 데이터로 시작한다.
- * 화면마다 큰 제목과 문단을 반복하면 도구가 아니라 소개 페이지처럼 읽힌다.
- */
 const RootLayout = () => {
   const headerRef = useRef<HTMLElement>(null);
 
-  /**
-   * 헤더 높이를 재서 CSS 변수로 넘긴다.
-   * 스티키 조작 줄과 바로가기 스크롤이 이 값을 기준으로 자리를 잡는데,
-   * 헤더는 태블릿 이하에서 2줄로 접혀 높이가 달라진다.
-   */
+  /** 헤더 높이를 CSS 변수로 넘긴다 — 태블릿 이하에서 2줄로 접혀 높이가 달라진다. */
   useEffect(() => {
     const header = headerRef.current;
     if (!header) return;

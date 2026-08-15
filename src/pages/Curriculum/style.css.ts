@@ -3,8 +3,6 @@ import { flex, font, layout, screen, spacing, theme } from '@/styles';
 
 export const page = style([flex.COLUMN_FLEX, { gap: spacing.md }]);
 
-/* ── 1학년 ─────────────────────────────────────────────────────── */
-
 export const firstYear = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(2, 1fr)',
@@ -91,7 +89,6 @@ export const geNote = style([
 
 export const geFootnote = style([font.caption, { color: theme.textTertiary }]);
 
-/** 자료가 없는 칸은 비워두지 않고 왜 없는지 적는다. */
 export const unpublished = style([
   font.caption,
   {
@@ -102,8 +99,6 @@ export const unpublished = style([
     lineHeight: '165%',
   },
 ]);
-
-/* ── 트랙 그리드 ───────────────────────────────────────────────── */
 
 export const diagramLink = style([
   font.caption,
@@ -160,7 +155,6 @@ export const trackNote = style([
   },
 ]);
 
-/** 6개 학기 × 모듈 격자. 좁으면 페이지가 아니라 표가 가로로 흐른다. */
 export const gridScroll = style({
   overflowX: 'auto',
 
@@ -238,8 +232,6 @@ export const termCell = style([
   { gap: '3px', padding: '3px 0' },
 ]);
 
-/* ── 과목 칸 ───────────────────────────────────────────────────── */
-
 export const course = style({
   position: 'relative',
   display: 'flex',
@@ -286,8 +278,6 @@ export const courseDot = style({
   backgroundColor: theme.accent,
 });
 
-/* ── 자격증 ────────────────────────────────────────────────────── */
-
 export const certList = style([flex.COLUMN_FLEX, { gap: '2px' }]);
 
 export const certRow = style({
@@ -312,8 +302,6 @@ export const certModule = style([
 ]);
 
 export const certItems = style([font.caption, { color: theme.textSecondary }]);
-
-/* ── 교양선택 ──────────────────────────────────────────────────── */
 
 export const electiveArea = style([flex.COLUMN_FLEX, { gap: spacing.sm }]);
 
@@ -373,8 +361,6 @@ export const subCourse = style([
   },
 ]);
 
-/* ── 이수 규정 ─────────────────────────────────────────────────── */
-
 export const ruleGrid = style({
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',
@@ -427,7 +413,6 @@ export const ruleNote = style([
 
 export const stamp = style([font.caption, { color: theme.textTertiary }]);
 
-/** 이수구분 배지 — 전필/전선/교필/교선을 색으로 구분한다. */
 export const typeTag = style([
   font.caption,
   {
@@ -459,7 +444,6 @@ export const code = style([
 
 export const abeek = style([font.caption, { color: theme.textTertiary }]);
 
-/** 왜 3·4학년이 비어 있는지 화면에서 바로 알리는 문구. */
 export const notice = style([
   font.caption,
   {
@@ -470,8 +454,6 @@ export const notice = style([
     lineHeight: '165%',
   },
 ]);
-
-/* ── 검색·필터 ─────────────────────────────────────────────────── */
 
 export const search = style([
   font.label,
@@ -492,7 +474,6 @@ export const search = style([
   },
 ]);
 
-/** 검색 결과가 0건일 때. 빈 표를 보여주느니 왜 비었는지 한 줄로 말한다. */
 export const empty = style([
   font.caption,
   {

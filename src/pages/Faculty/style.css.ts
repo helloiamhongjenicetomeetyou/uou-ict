@@ -34,7 +34,6 @@ export const sourceLink = style([
 
 export const list = style([flex.COLUMN_FLEX, { gap: '1px' }]);
 
-/* 카드가 아니라 목록 행 — 24명이 한눈에 훑히는 게 우선이다. */
 export const row = style({
   display: 'grid',
   // 이름·직위는 줄바꿈되면 안 되므로 auto 로 두고, 연구분야가 남는 폭을 먹는다.

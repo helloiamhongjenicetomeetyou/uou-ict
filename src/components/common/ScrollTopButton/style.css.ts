@@ -26,7 +26,6 @@ const base = style([
   },
 ]);
 
-/** 보임/숨김을 display 가 아니라 투명도로 바꾼다 — 사라질 때도 미끄러지게. */
 export const { hidden, visible } = styleVariants({
   hidden: [
     base,

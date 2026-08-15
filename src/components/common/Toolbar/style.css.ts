@@ -21,11 +21,7 @@ export const bar = style([
   },
 ]);
 
-/**
- * 헤더 바로 아래에 붙는 조작 줄.
- * `--app-header-h` 는 RootLayout 이 헤더 높이를 재서 넣어 준다 — 헤더가 2줄로
- * 접히는 폭에서도 조작 줄이 헤더 뒤로 숨지 않게.
- */
+/** `--app-header-h` 는 RootLayout 이 헤더 높이를 재서 넣어 준다. */
 export const stickyBar = style([
   bar,
   {

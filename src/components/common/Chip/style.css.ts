@@ -28,7 +28,6 @@ export const selected = style([
   },
 ]);
 
-/** 칩들을 담는 회색 트랙. */
 export const track = style([
   flex.VERTICAL,
   {

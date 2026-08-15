@@ -94,8 +94,6 @@ export const cardLink = style([
   },
 ]);
 
-/* ── 1학년 공통과정 ─────────────────────────────────────────────── */
-
 export const term = style([flex.COLUMN_FLEX, { gap: spacing.sm }]);
 
 export const termHead = style([
