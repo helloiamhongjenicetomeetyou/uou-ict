@@ -1,0 +1,1318 @@
+{
+  "source": {
+    "system": "UWINS 교과과정조회",
+    "url": "https://uwins.ulsan.ac.kr/LESN/A/MCA06S.aspx?MenuID=MCA06S!1&daehag_cd=11918&sosog_cd=11927&frame=none",
+    "embeddedIn": "https://ict.ulsan.ac.kr/ict/6855",
+    "year": 2026,
+    "college": "미래엔지니어링융합대학",
+    "collegeCode": "11918"
+  },
+  "common": [
+    {
+      "year": 1,
+      "sem": 1,
+      "type": "교필",
+      "abeek": "기타",
+      "code": "A01487",
+      "name": "AI시대의의사소통과글쓰기기초",
+      "credits": 2
+    },
+    {
+      "year": 1,
+      "sem": 1,
+      "type": "교선",
+      "abeek": "*",
+      "code": "A01378",
+      "name": "자기이해와목표설계",
+      "credits": 1
+    },
+    {
+      "year": 1,
+      "sem": 1,
+      "type": "교선",
+      "abeek": "",
+      "code": "A01396",
+      "name": "행렬과논리",
+      "credits": 3
+    },
+    {
+      "year": 1,
+      "sem": 1,
+      "type": "교선",
+      "abeek": "",
+      "code": "A01403",
+      "name": "기초프로그래밍I",
+      "credits": 3
+    },
+    {
+      "year": 1,
+      "sem": 1,
+      "type": "교선",
+      "abeek": "MSC",
+      "code": "E01316",
+      "name": "미적분학I",
+      "credits": 3
+    },
+    {
+      "year": 1,
+      "sem": 1,
+      "type": "전필",
+      "abeek": "",
+      "code": "EN0024",
+      "name": "컴퓨터개론",
+      "credits": 3
+    },
+    {
+      "year": 2,
+      "sem": 1,
+      "type": "교필",
+      "abeek": "*",
+      "code": "A01289",
+      "name": "의사소통과심화글쓰기",
+      "credits": 2
+    },
+    {
+      "year": 1,
+      "sem": 2,
+      "type": "교필",
+      "abeek": "*",
+      "code": "A01285",
+      "name": "인본적사고와공동체의가치",
+      "credits": 2
+    },
+    {
+      "year": 1,
+      "sem": 2,
+      "type": "교선",
+      "abeek": "",
+      "code": "A01380",
+      "name": "기초확률",
+      "credits": 3
+    },
+    {
+      "year": 1,
+      "sem": 2,
+      "type": "교선",
+      "abeek": "",
+      "code": "A01402",
+      "name": "기초프로그래밍II",
+      "credits": 3
+    },
+    {
+      "year": 1,
+      "sem": 2,
+      "type": "교선",
+      "abeek": "MSC",
+      "code": "E01317",
+      "name": "미적분학II",
+      "credits": 3
+    },
+    {
+      "year": 1,
+      "sem": 2,
+      "type": "전필",
+      "abeek": "",
+      "code": "EN0040",
+      "name": "ICT융합개론",
+      "credits": 3
+    }
+  ],
+  "tracks": [
+    {
+      "trackId": "CSE",
+      "name": "컴퓨터공학",
+      "variant": "기본",
+      "sosogCode": "",
+      "courses": [
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "교필",
+          "abeek": "*",
+          "code": "A01289",
+          "name": "의사소통과심화글쓰기",
+          "credits": 2
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0057",
+          "name": "오픈소스SW기초",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0068",
+          "name": "기초시스템프로그래밍",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0078",
+          "name": "AI데이터사이언스",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "*",
+          "code": "EN0097",
+          "name": "디지털공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "*",
+          "code": "G03750",
+          "name": "객체지향프로그래밍",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "교선",
+          "abeek": "*",
+          "code": "A01290",
+          "name": "진로탐색과목표설정",
+          "credits": 2
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "*",
+          "code": "EN0077",
+          "name": "인공지능기초및응용",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0113",
+          "name": "자료구조및알고리즘",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "*",
+          "code": "G02592",
+          "name": "컴퓨터구조",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "*",
+          "code": "G03827",
+          "name": "시스템프로그래밍",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "trackId": "CSE",
+      "name": "컴퓨터공학",
+      "variant": "통합",
+      "sosogCode": "",
+      "courses": [
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0057",
+          "name": "오픈소스SW기초",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0078",
+          "name": "AI데이터사이언스",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "기타",
+          "code": "G03284",
+          "name": "전공상담I",
+          "credits": 0
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "*",
+          "code": "G03750",
+          "name": "객체지향프로그래밍",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0068",
+          "name": "기초시스템프로그래밍",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0069",
+          "name": "휴먼컴퓨터상호작용개론",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "*",
+          "code": "EN0097",
+          "name": "디지털공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "교선",
+          "abeek": "*",
+          "code": "A01290",
+          "name": "진로탐색과목표설정",
+          "credits": 2
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0077",
+          "name": "인공지능기초및응용",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "기타",
+          "code": "EN0113",
+          "name": "자료구조및알고리즘",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "기타",
+          "code": "G03285",
+          "name": "전공상담II",
+          "credits": 0
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G01058",
+          "name": "데이터통신",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G02592",
+          "name": "컴퓨터구조",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "G03766",
+          "name": "모바일프로그래밍",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "G03827",
+          "name": "시스템프로그래밍",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "trackId": "AI",
+      "name": "인공지능",
+      "variant": "기본",
+      "sosogCode": "",
+      "courses": [
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0028",
+          "name": "AI선형대수",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0057",
+          "name": "오픈소스SW기초",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "EN0069",
+          "name": "휴먼컴퓨터상호작용개론",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "EN0072",
+          "name": "통계적추론",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "EN0077",
+          "name": "인공지능기초및응용",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "EN0078",
+          "name": "AI데이터사이언스",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "G03750",
+          "name": "객체지향프로그래밍",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "EN0066",
+          "name": "AI신호처리1",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "EN0067",
+          "name": "딥러닝1",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0112",
+          "name": "AI데이터베이스",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0113",
+          "name": "자료구조및알고리즘",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "trackId": "AI",
+      "name": "인공지능",
+      "variant": "통합",
+      "sosogCode": "",
+      "courses": [
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0057",
+          "name": "오픈소스SW기초",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0077",
+          "name": "인공지능기초및응용",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0028",
+          "name": "AI선형대수",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0072",
+          "name": "통계적추론",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "EN0078",
+          "name": "AI데이터사이언스",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "G03750",
+          "name": "객체지향프로그래밍",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0067",
+          "name": "딥러닝1",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0066",
+          "name": "AI신호처리1",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0112",
+          "name": "AI데이터베이스",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0113",
+          "name": "자료구조및알고리즘",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "G03766",
+          "name": "모바일프로그래밍",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "trackId": "IICT",
+      "name": "산업ICT공학",
+      "variant": "기본",
+      "sosogCode": "",
+      "courses": [
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0057",
+          "name": "오픈소스SW기초",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G00595",
+          "name": "원가관리",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G00599",
+          "name": "인간공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G00664",
+          "name": "데이터베이스",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "MSC",
+          "code": "G00675",
+          "name": "공업통계",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "*",
+          "code": "G03593",
+          "name": "공업제도",
+          "credits": 2
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G00587",
+          "name": "경제성공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "G02985",
+          "name": "데이터마이닝",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G03414",
+          "name": "CAD",
+          "credits": 2
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "G03787",
+          "name": "생산관리론",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "G03839",
+          "name": "인간-컴퓨터인터랙션개론",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "trackId": "IICT",
+      "name": "산업ICT공학",
+      "variant": "통합",
+      "sosogCode": "",
+      "courses": [
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0057",
+          "name": "오픈소스SW기초",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "공학주제",
+          "code": "G00599",
+          "name": "인간공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "MSC",
+          "code": "G00675",
+          "name": "공업통계",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G00595",
+          "name": "원가관리",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G00664",
+          "name": "데이터베이스",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "*",
+          "code": "G03593",
+          "name": "공업제도",
+          "credits": 2
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "기타",
+          "code": "G02985",
+          "name": "데이터마이닝",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "",
+          "code": "G03787",
+          "name": "생산관리론",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G00587",
+          "name": "경제성공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G03414",
+          "name": "CAD",
+          "credits": 2
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "G03839",
+          "name": "인간-컴퓨터인터랙션개론",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "trackId": "SAFETY",
+      "name": "산업안전공학",
+      "variant": "기본",
+      "sosogCode": "",
+      "courses": [
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0057",
+          "name": "오픈소스SW기초",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0073",
+          "name": "기계안전공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G00599",
+          "name": "인간공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G00637",
+          "name": "작업관리",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "MSC",
+          "code": "G00675",
+          "name": "공업통계",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "*",
+          "code": "G03579",
+          "name": "안전공학개론",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0074",
+          "name": "전기안전공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0075",
+          "name": "시스템안전공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0076",
+          "name": "소방안전",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "G02985",
+          "name": "데이터마이닝",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "G03787",
+          "name": "생산관리론",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "trackId": "SAFETY",
+      "name": "산업안전공학",
+      "variant": "통합",
+      "sosogCode": "",
+      "courses": [
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0057",
+          "name": "오픈소스SW기초",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0073",
+          "name": "기계안전공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "공학주제",
+          "code": "G00599",
+          "name": "인간공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "*",
+          "code": "G03579",
+          "name": "안전공학개론",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "공학주제",
+          "code": "G00637",
+          "name": "작업관리",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "MSC",
+          "code": "G00675",
+          "name": "공업통계",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0074",
+          "name": "전기안전공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0075",
+          "name": "시스템안전공학",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0076",
+          "name": "소방안전",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "G02985",
+          "name": "데이터마이닝",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "G03787",
+          "name": "생산관리론",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "trackId": "MATH",
+      "name": "데이터응용수학",
+      "variant": "기본",
+      "sosogCode": "",
+      "courses": [
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "E00064",
+          "name": "선형대수학I",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0030",
+          "name": "공학도를위한해석학I",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0032",
+          "name": "확률과활용",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0034",
+          "name": "미분방정식과시뮬레이션I",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0057",
+          "name": "오픈소스SW기초",
+          "credits": 3
+        },
+        {
+          "year": 3,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "E01832",
+          "name": "데이터과학I",
+          "credits": 3
+        },
+        {
+          "year": 3,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "E01834",
+          "name": "수리적신호처리I",
+          "credits": 3
+        },
+        {
+          "year": 3,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "E01836",
+          "name": "데이터분석알고리즘",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "교필",
+          "abeek": "기타",
+          "code": "A01491",
+          "name": "소프트웨어와AI",
+          "credits": 2
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "교선",
+          "abeek": "*",
+          "code": "A01290",
+          "name": "진로탐색과목표설정",
+          "credits": 2
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "기타",
+          "code": "E00065",
+          "name": "선형대수학II",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0031",
+          "name": "공학도를위한해석학II",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0033",
+          "name": "데이터통계",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0035",
+          "name": "미분방정식과시뮬레이션II",
+          "credits": 3
+        }
+      ]
+    },
+    {
+      "trackId": "MATH",
+      "name": "데이터응용수학",
+      "variant": "통합",
+      "sosogCode": "",
+      "courses": [
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "기타",
+          "code": "E00064",
+          "name": "선형대수학I",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0032",
+          "name": "확률과활용",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0034",
+          "name": "미분방정식과시뮬레이션I",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0057",
+          "name": "오픈소스SW기초",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0030",
+          "name": "공학도를위한해석학I",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0095",
+          "name": "수학연습세미나I",
+          "credits": 1
+        },
+        {
+          "year": 3,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "E01832",
+          "name": "데이터과학I",
+          "credits": 3
+        },
+        {
+          "year": 3,
+          "sem": 1,
+          "type": "전필",
+          "abeek": "",
+          "code": "E01836",
+          "name": "데이터분석알고리즘",
+          "credits": 3
+        },
+        {
+          "year": 3,
+          "sem": 1,
+          "type": "전선",
+          "abeek": "",
+          "code": "E01834",
+          "name": "수리적신호처리I",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "교필",
+          "abeek": "",
+          "code": "A01491",
+          "name": "소프트웨어와AI",
+          "credits": 2
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "교선",
+          "abeek": "*",
+          "code": "A01290",
+          "name": "진로탐색과목표설정",
+          "credits": 2
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "기타",
+          "code": "E00065",
+          "name": "선형대수학II",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0033",
+          "name": "데이터통계",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0035",
+          "name": "미분방정식과시뮬레이션II",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0031",
+          "name": "공학도를위한해석학II",
+          "credits": 3
+        },
+        {
+          "year": 2,
+          "sem": 2,
+          "type": "전선",
+          "abeek": "",
+          "code": "EN0096",
+          "name": "수학연습세미나II",
+          "credits": 1
+        },
+        {
+          "year": 3,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "",
+          "code": "E01837",
+          "name": "인공신경망",
+          "credits": 3
+        },
+        {
+          "year": 3,
+          "sem": 2,
+          "type": "전필",
+          "abeek": "",
+          "code": "EN0027",
+          "name": "산학협력프로젝트캡스톤디자인",
+          "credits": 3
+        }
+      ]
+    }
+  ]
+}
