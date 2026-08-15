@@ -69,8 +69,12 @@ const ResearchPage = () => {
         <Section title="논문 제목으로 찾습니다" note="추천 검색어">
           <p className={s.guide}>
             이 서비스가 받는 검색 조건은 <b>논문명 하나뿐</b>입니다. 저자명이나
-            발행연도로는 찾을 수 없고, 소속기관으로 좁히려면 별도 데이터셋
-            (기관 정보 서비스)을 함께 신청해야 합니다.
+            발행연도로는 찾을 수 없습니다.
+          </p>
+          <p className={s.guideMuted}>
+            KCI 가 논문에 붙여 둔 기관은 저자 소속이 아니라 <b>학술지 발행기관</b>
+            이라, &lsquo;울산대 교수 논문&rsquo;만 골라내는 건 이 API 로는 되지
+            않습니다. 그래서 걸러내는 척하지 않고 제목 검색으로 둡니다.
           </p>
           <div className={s.suggestions}>
             {FIELD_KEYWORDS.map((item) => (
