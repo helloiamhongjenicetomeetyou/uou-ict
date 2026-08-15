@@ -6,18 +6,9 @@ const nf = new Intl.NumberFormat('ko-KR');
 export const formatNumber = (value: number | null | undefined): string =>
   value == null || Number.isNaN(value) ? EMPTY_MARK : nf.format(value);
 
-export const formatPercent = (
-  value: number | null | undefined,
-  digits = 1,
-): string =>
-  value == null || Number.isNaN(value)
-    ? EMPTY_MARK
-    : `${value.toFixed(digits)}%`;
-
 /**
  * 금액을 읽기 쉬운 단위로 줄인다.
- * 등록금(백만 단위)과 장학금 총액(십억 단위)이 한 화면에 같이 나오는데,
- * 둘 다 만원으로 찍으면 총액이 "152,500만원" 처럼 읽히지 않는다.
+ * 등록금은 백만 단위라 원 단위로 찍으면 자리수만 길고 읽히지 않는다.
  */
 export const formatWon = (value: number | null | undefined): string => {
   if (value == null || Number.isNaN(value)) return EMPTY_MARK;
@@ -27,21 +18,3 @@ export const formatWon = (value: number | null | undefined): string => {
   if (abs >= 10_000) return `${nf.format(Math.round(value / 10_000))}만원`;
   return `${nf.format(value)}원`;
 };
-
-/** ISO 문자열을 'YYYY-MM-DD HH:mm' 로. 조회 시각 표기용. */
-export const formatDateTime = (iso: string): string => {
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return EMPTY_MARK;
-
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
-    date.getDate(),
-  )} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
-};
-
-/** 두 값의 증감. 시계열에서 마지막 두 점을 비교할 때 쓴다. */
-export const diff = (
-  current: number | null | undefined,
-  previous: number | null | undefined,
-): number | null =>
-  current == null || previous == null ? null : current - previous;

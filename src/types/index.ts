@@ -1,9 +1,7 @@
 /**
  * 이 서비스의 도메인 타입.
  *
- * 데이터는 두 갈래다.
- *  - 학부 사실   : 공식 홈페이지·공시에서 확인해 `src/data/` 에 적어둔 값. 전부 실제 값이다.
- *  - 오픈API     : 인증키가 있어야 도는 것 (현재는 KCI 논문뿐).
+ * 값은 전부 공식 홈페이지·공시에서 확인해 `src/data/` 에 적어둔 실제 값이다.
  * 지어낸 샘플 값은 두지 않는다. 모르는 값은 null 로 두고 화면에 '—' 로 찍는다.
  */
 
@@ -135,50 +133,4 @@ export interface GeneralEducation {
   baseDate: string;
   totalCredits: number;
   areas: GeneralEducationArea[];
-}
-
-/* ── 오픈API (KCI) ─────────────────────────────────────────────── */
-
-export interface ResearchSearchParams {
-  keyword?: string;
-  page?: number;
-  size?: number;
-}
-
-/**
- * KCI 논문 한 건.
- *
- * 담기는 항목은 [KCI논문 정보 조회] 응답에 실제로 있는 것만이다.
- * 저자명·학술지명·발행연도는 이 서비스가 주지 않아 아예 두지 않는다.
- * 키워드·DOI 처럼 비어 오는 일이 잦은 항목은 null 로 두고 화면에서 '—' 로 찍는다.
- */
-export interface ResearchArticle {
-  articleId: string;
-  title: string;
-  englishTitle: string | null;
-  keywords: string[];
-  /** '1–34' 형태. 첫 페이지나 끝 페이지가 비면 null. */
-  pages: string | null;
-  /** 원문(PDF)이 KCI 에 올라와 있는지. */
-  fullText: boolean;
-  citationCount: number | null;
-  doi: string | null;
-  url: string | null;
-}
-
-export interface ResearchSearchResult {
-  articles: ResearchArticle[];
-  totalCount: number;
-  page: number;
-  size: number;
-}
-
-export class OpenDataError extends Error {
-  readonly resultCode?: string;
-
-  constructor(message: string, resultCode?: string) {
-    super(message);
-    this.name = 'OpenDataError';
-    this.resultCode = resultCode;
-  }
 }

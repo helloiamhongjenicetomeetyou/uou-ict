@@ -19,7 +19,6 @@ ICT융합학부는 2025년 글로컬대학30 학사구조 개편으로 신설됐
 | [ICT융합학부 교수소개](https://ict.ulsan.ac.kr/ict/6629) | 교수진 24명 — 직위·연구분야·연락처 |
 | [교양대학 이수규정](https://cge.ulsan.ac.kr/cge/6895) · [영역별 교과목](https://cge.ulsan.ac.kr/cge/7330) | 교양 44학점 규정, 교양 203과목 |
 | 한국장학재단 [3071171](https://www.data.go.kr/data/3071171/fileData.do) (2026-05-19) | 대학 평균등록금 |
-| 한국연구재단 [15085348](https://www.data.go.kr/data/15085348/openapi.do) | KCI 논문 제목 검색 (인증키 필요) |
 
 ### 싣지 않은 것과 그 이유
 
@@ -37,69 +36,25 @@ ICT융합학부는 2025년 글로컬대학30 학사구조 개편으로 신설됐
 
 ```bash
 pnpm install
-cp .env.example .env
 pnpm dev
 ```
 
 기본 주소: http://localhost:5173
 
-**인증키 없이도 전부 동작합니다.** 학부 정보는 모두 정적 데이터라 네트워크를 타지 않습니다.
-`/research`(KCI 논문 검색) 한 화면만 오픈API를 쓰고, 키가 없으면 검색을 막고 발급 방법을 안내합니다.
-
-| 변수 | 설명 |
-| --- | --- |
-| `VITE_DATAGO_SERVICE_KEY` | 공공데이터포털 일반 인증키(디코딩된 키). KCI 논문 검색에만 쓰임 |
-| `VITE_OPENAPI_BASE_URL` | 오픈API 경로. 개발 중엔 비워둡니다 |
-
-오픈API는 브라우저에 CORS 헤더를 주지 않아 `vite.config.ts` 의 프록시가 중계합니다.
-배포본에서는 이 프록시가 없으므로 `vercel.json` 의 리라이트가 같은 역할을 합니다.
-
-### 인증키 발급
-
-[15085348 KCI 논문정보서비스](https://www.data.go.kr/data/15085348/openapi.do) 페이지에서 **활용신청** →
-개발계정은 자동승인(일 5,000건)입니다. 마이페이지 > 데이터활용 > Open API > 인증키 발급현황에서 받습니다.
-
-포털은 같은 키를 Encoding / Decoding 두 벌로 주는데 **어느 쪽을 넣어도 됩니다.**
-Encoding 키가 들어오면 `src/api/index.ts` 가 한 번 풀어서 보냅니다 — 그대로 보내면
-`%3D` 가 `%253D` 로 이중 인코딩돼 403(등록되지 않은 서비스키)이 납니다.
-
-### 이 API 로 할 수 있는 것과 없는 것
-
-기술문서 「KCI_논문정보」 상세기능 17 [KCI논문 정보 조회](`openApiM310List`) 기준입니다.
-
-| | |
-| --- | --- |
-| 검색 조건 | **논문명(`artiNm`) 하나뿐**입니다. 저자명·발행연도로는 찾을 수 없습니다 |
-| 응답 형식 | **XML 만** 제공합니다. json 옵션이 없습니다 |
-| 받아오는 것 | 제목(한/영), 키워드, 페이지, 원문 여부, DOI, WOS 피인용수 — 저자·학술지명·발행연도는 이 서비스가 주지 않습니다 |
-| 소속기관 필터 | **불가능합니다.** 논문에 붙은 `INSI_ID` 는 저자 소속이 아니라 학술지 **발행기관**입니다 — 아래 참고 |
-
-#### 소속기관으로 못 거르는 이유
-
-[15084667 KCI 기관 정보 서비스](https://www.data.go.kr/data/15084667/openapi.do)를 함께 활용신청하면
-기관명으로 기관ID를 찾을 수 있습니다(울산대학교 = `INS000067516`). 그런데 논문 응답의 `INSI_ID` 를
-되짚어 보니 **학술지를 펴낸 기관**이었습니다 — 샘플 논문의 `INS000001925` 는 한국분석철학회였습니다.
-울산대 ID 로 거르면 '울산대가 발행하는 학술지에 실린 논문'만 남아 대부분 0건이고,
-`insiId` 만으로 조회하면 포털이 60초를 넘겨 504 로 끊습니다. 그래서 제목 검색으로 둡니다.
-
-느립니다. 응답에 초록·참고문헌이 통째로 실려 오는 데다 포털 쪽 검색이 검색어를 탑니다 —
-`인공지능`(6,378건)은 4초인데 `컴퓨터공학`(14건)은 30초를 넘긴 적이 있습니다. 결과 수와 무관합니다.
-그래서 타임아웃 45초, 재시도 1회, 한 번에 10건으로 두고 화면에도 "느릴 수 있다"고 적어 뒀습니다.
+**인증키도 서버도 필요 없습니다.** 학부 정보가 전부 정적 데이터라 화면이 네트워크를 타지 않습니다.
+빌드 결과는 정적 파일 세 개뿐입니다.
 
 ## 배포
 
 Vercel에 정적 빌드로 올립니다. 리포지토리 루트가 곧 앱이라 Root Directory 설정은 필요 없고,
-`pnpm build` → `dist` 는 Vite 프리셋이 알아서 잡습니다. 설정은 [`vercel.json`](vercel.json) 두 줄뿐입니다.
+`pnpm build` → `dist` 는 Vite 프리셋이 알아서 잡습니다. 설정은 [`vercel.json`](vercel.json) 한 줄뿐입니다.
 
-| 리라이트 | 이유 |
-| --- | --- |
-| `/openapi/datago/*` → `apis.data.go.kr` | 개발 서버 프록시를 대신한다. 공공데이터포털은 CORS 헤더를 주지 않는다 |
-| 나머지 전부 → `/index.html` | `/curriculum` 에서 새로고침해도 404 가 나지 않게. 실제 파일이 있으면 그쪽이 먼저다 |
+```json
+{ "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }
+```
 
-**인증키는 배포 환경변수에 넣지 않는 것을 권합니다.** `VITE_` 로 시작하는 값은 빌드할 때
-자바스크립트 번들에 그대로 박혀서 누구나 읽을 수 있습니다. 키가 없으면 `/research` 는
-"인증키가 필요합니다" 안내를 띄우고 나머지 화면은 전부 정상입니다. 검색까지 열려면
-키를 서버에서 붙이는 서버리스 함수를 두는 편이 안전합니다.
+`/curriculum` 에서 새로고침해도 404 가 나지 않게 하는 리라이트입니다. 실제 파일이 있으면 그쪽이 먼저 나갑니다.
+환경변수는 하나도 없습니다.
 
 ## 화면
 
@@ -108,7 +63,6 @@ Vercel에 정적 빌드로 올립니다. 리포지토리 루트가 곧 앱이라
 | `/` | 학부 개요, 1학년 공통과정, 5개 트랙, 등록금 |
 | `/curriculum` | UWINS 개설 교과목 + 5개 트랙 이수체계도 + 교양 203과목 |
 | `/faculty` | 교수진 24명 — 직위·연구분야 검색 |
-| `/research` | KCI 논문 제목 검색 (인증키 필요) |
 
 ## 화면을 쓰는 법
 
@@ -185,12 +139,10 @@ src/
 │  ├─ faculty.ts            교수진 24명
 │  ├─ publicData.ts         등록금 실측값
 │  └─ officialCurriculum.json  UWINS 개설 교과목
-├─ api/           axios 인스턴스 + 포털 응답 봉투 처리
-├─ services/      오픈API — 현재 KCI 논문뿐
 ├─ hooks/         useCountUp — 숫자 굴리기
 ├─ components/
 │  ├─ common/     Chip · Toolbar · Section · StatCard · CountUp · DataTable
-│  │              · QueryState · ScrollTopButton
+│  │              · ScrollTopButton
 │  └─ layout/     RootLayout
 ├─ pages/         라우트 단위 화면 (index.tsx + style.css.ts)
 ├─ styles/        theme · font · flex · spacing · screen · elevation · layout · global
