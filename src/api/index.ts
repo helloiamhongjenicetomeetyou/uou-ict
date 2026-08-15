@@ -3,17 +3,33 @@ import axios, {
   type AxiosRequestConfig,
   type AxiosResponse,
 } from 'axios';
-import { OpenDataError, type DataGoResponse } from '@/types';
-
-/** 공공데이터포털 정상 응답 코드. 그 외는 전부 실패로 본다. */
-const DATAGO_SUCCESS_CODE = '00';
+import { OpenDataError } from '@/types';
 
 /** 프록시 프리픽스 — vite.config.ts 의 PROXY_TARGETS 와 짝을 이룬다. */
 export const OPENAPI_PREFIX = {
   datago: '/openapi/datago',
 } as const;
 
-export const DATAGO_SERVICE_KEY = import.meta.env.VITE_DATAGO_SERVICE_KEY ?? '';
+/**
+ * 인증키를 디코딩된 형태로 맞춘다.
+ *
+ * 포털은 같은 키를 Encoding / Decoding 두 벌로 준다. Encoding 키를 그대로 넣으면
+ * axios 가 한 번 더 인코딩해 `%3D` 가 `%253D` 가 되고, 포털은 등록되지 않은
+ * 서비스키(403)라고 답한다. 어느 쪽을 붙여넣든 돌아가게 여기서 한 번 풀어 둔다.
+ */
+const normalizeServiceKey = (key: string): string => {
+  if (!key.includes('%')) return key;
+  try {
+    return decodeURIComponent(key);
+  } catch {
+    /* 키에 우연히 %가 들어간 경우 — 건드리지 않는다. */
+    return key;
+  }
+};
+
+export const DATAGO_SERVICE_KEY = normalizeServiceKey(
+  import.meta.env.VITE_DATAGO_SERVICE_KEY ?? '',
+);
 
 /** 인증키가 없으면 오픈API 화면은 "키를 넣으라"고만 안내한다. */
 export const hasDataGoKey = () => DATAGO_SERVICE_KEY.length > 0;
@@ -25,7 +41,12 @@ export const hasDataGoKey = () => DATAGO_SERVICE_KEY.length > 0;
  */
 export const http = axios.create({
   baseURL: import.meta.env.VITE_OPENAPI_BASE_URL,
-  timeout: 15_000,
+  /**
+   * KCI 논문 조회는 느리다. 재보면 '인공지능'(6,378건)은 4초인데
+   * '컴퓨터공학'(14건)은 30초를 넘긴다 — 결과 수가 아니라 포털 쪽 검색 성능 문제다.
+   * 짧게 끊으면 멀쩡한 요청이 타임아웃으로 죽는다.
+   */
+  timeout: 45_000,
   headers: { Accept: 'application/json' },
 });
 
@@ -69,34 +90,6 @@ export const getApiErrorMessage = (
   }
   if (error instanceof Error) return error.message;
   return fallback;
-};
-
-/**
- * 공공데이터포털 응답 봉투를 벗겨 items 배열만 돌려준다.
- * 포털은 실패해도 HTTP 200 으로 내려주면서 header.resultCode 로만 알리고,
- * 인증키가 틀리면 아예 XML 문자열이 오기도 해서 두 경우를 모두 막는다.
- */
-export const unwrapDataGo = <T>(payload: DataGoResponse<T> | string): T[] => {
-  if (typeof payload === 'string') {
-    const reason = payload.match(/<returnAuthMsg>(.*?)<\/returnAuthMsg>/)?.[1];
-    throw new OpenDataError(
-      reason
-        ? `공공데이터포털이 요청을 거부했어요: ${reason}`
-        : '공공데이터포털이 JSON 이 아닌 응답을 보냈어요. 인증키를 확인해 주세요.',
-    );
-  }
-
-  const header = payload?.response?.header;
-  if (header && header.resultCode !== DATAGO_SUCCESS_CODE) {
-    throw new OpenDataError(
-      `${header.resultMsg} (resultCode ${header.resultCode})`,
-      header.resultCode,
-    );
-  }
-
-  const items = payload?.response?.body?.items;
-  if (!items) return [];
-  return Array.isArray(items) ? items : (items.item ?? []);
 };
 
 export const api = {

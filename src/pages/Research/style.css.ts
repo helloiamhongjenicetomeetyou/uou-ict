@@ -122,3 +122,9 @@ export const citation = style([
   font.caption,
   { color: theme.textTertiary, whiteSpace: 'nowrap' },
 ]);
+
+/** 추천 검색어 칩 줄. 빈 화면에서 뭘 쳐야 할지 알려준다. */
+export const suggestions = style([
+  flex.FLEX,
+  { flexWrap: 'wrap', gap: '6px', marginTop: spacing.sm },
+]);

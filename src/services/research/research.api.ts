@@ -1,18 +1,31 @@
-import { api, OPENAPI_PREFIX, unwrapDataGo } from '@/api';
-import { UNIVERSITY_NAME } from '@/constants';
-import type {
-  DataGoResponse,
-  ResearchSearchParams,
-  ResearchSearchResult,
+import { api, OPENAPI_PREFIX } from '@/api';
+import {
+  OpenDataError,
+  type ResearchArticle,
+  type ResearchSearchParams,
+  type ResearchSearchResult,
 } from '@/types';
 
 /**
- * ⚠️ 경로·파라미터명은 데이터셋 페이지의 활용가이드(PDF)를 보고 확정해야 한다.
- * KCI 는 포털 경유(15085348) 외에 kci.go.kr 자체 오픈API 도 있고 파라미터가 서로 다르다.
+ * KCI 논문 정보 조회 — 공공데이터포털 15085348(한국연구재단 KCI 논문정보서비스),
+ * 기술문서 「KCI_논문정보」 상세기능 17 [KCI논문 정보 조회] 기준.
+ *
+ * 응답은 **XML 로만** 온다. 이 서비스에는 json 옵션이 없다.
+ * 검색 조건은 논문명(artiNm) 하나뿐이다. 저자명·발행연도로는 찾을 수 없다.
  */
-const KCI_ENDPOINT = `${OPENAPI_PREFIX.datago}/B552691/openapi/kciArticleService`;
+const KCI_ARTICLE_LIST = `${OPENAPI_PREFIX.datago}/B552540/KCIOpenApi/artiInfo/openApiM310List`;
 
-/** ICT융합학부 분야 기본 검색어. 5개 트랙 이름에서 뽑았다. */
+/**
+ * 소속기관으로 좁히려면 요청에 insiId(기관ID)를 얹으면 되는데, 그 값은
+ * 별도 데이터셋 「한국연구재단_KCI 기관 정보 서비스」(15084667)를 활용신청해야
+ * 얻을 수 있다. 신청 전에는 같은 인증키로도 403 이 떨어진다.
+ */
+
+/** KCI 논문 상세 화면. 논문ID 하나로 열린다. */
+const articleUrl = (articleId: string) =>
+  `https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=${articleId}`;
+
+/** 트랙 이름에서 뽑은 추천 검색어. 빈 화면에 뭘 쳐야 할지 알려주려고 둔다. */
 export const FIELD_KEYWORDS = [
   '컴퓨터공학',
   '인공지능',
@@ -21,64 +34,108 @@ export const FIELD_KEYWORDS = [
   '데이터응용수학',
 ];
 
-interface KciRawArticle {
-  articleId?: string;
-  title?: string;
-  author?: string;
-  journalName?: string;
-  pubYear?: string;
-  category?: string;
-  citationCount?: string;
-  url?: string;
-  openAccess?: string;
-}
+const field = (item: Element, tag: string): string =>
+  item.getElementsByTagName(tag)[0]?.textContent?.trim() ?? '';
 
-const toNumber = (value: string | undefined): number | null => {
+const optional = (value: string): string | null => value || null;
+
+const toNumber = (value: string): number | null => {
   if (!value) return null;
   const parsed = Number(value.replace(/[^\d.-]/g, ''));
   return Number.isFinite(parsed) ? parsed : null;
 };
 
-/** KCI 논문 검색. 소속기관을 울산대학교로 고정하고 분야 키워드를 얹는다. */
+/** 쉼표·세미콜론으로 붙어 오는 키워드 묶음을 쪼갠다. 빈 값이 흔하다. */
+const toKeywords = (value: string): string[] =>
+  value
+    .split(/[,;]/)
+    .map((keyword) => keyword.trim())
+    .filter(Boolean);
+
+/**
+ * 포털 XML 을 벗긴다.
+ *
+ * 인증에 실패하면 `<response>` 대신 `<OpenAPI_ServiceResponse>` 봉투에
+ * returnAuthMsg 로 이유가 담겨 오고, HTTP 상태는 400·403 으로 제각각이다.
+ */
+const parseArticles = (xml: string): ResearchSearchResult => {
+  const doc = new DOMParser().parseFromString(xml, 'text/xml');
+
+  if (doc.getElementsByTagName('parsererror').length > 0) {
+    throw new OpenDataError('공공데이터포털 응답을 해석하지 못했어요.');
+  }
+
+  const authMessage = doc
+    .getElementsByTagName('returnAuthMsg')[0]
+    ?.textContent?.trim();
+  if (authMessage) {
+    throw new OpenDataError(
+      `공공데이터포털이 요청을 거부했어요: ${authMessage}`,
+      doc.getElementsByTagName('returnReasonCode')[0]?.textContent ?? undefined,
+    );
+  }
+
+  const resultCode =
+    doc.getElementsByTagName('resultCode')[0]?.textContent?.trim() ?? '';
+  if (resultCode && resultCode !== '00') {
+    const message =
+      doc.getElementsByTagName('resultMsg')[0]?.textContent?.trim() ??
+      '알 수 없는 오류';
+    throw new OpenDataError(`${message} (resultCode ${resultCode})`, resultCode);
+  }
+
+  const items = Array.from(doc.getElementsByTagName('item'));
+
+  const articles: ResearchArticle[] = items.map((item) => {
+    const articleId = field(item, 'ARTI_ID');
+    const first = field(item, 'FIRS_PG');
+    const last = field(item, 'FINI_PG');
+
+    return {
+      articleId,
+      title:
+        field(item, 'ARTI_KOR_TITL') ||
+        field(item, 'ARTI_ENG_TITL') ||
+        field(item, 'ARTI_FOLA_TITL') ||
+        '(제목 없음)',
+      englishTitle: optional(field(item, 'ARTI_ENG_TITL')),
+      keywords: toKeywords(
+        field(item, 'KOR_KEYW') || field(item, 'ENG_KEYW'),
+      ),
+      pages: first && last ? `${first}–${last}` : null,
+      /** 원문(PDF)이 KCI 에 올라와 있는지. */
+      fullText: field(item, 'ORTE_YN') === 'Y',
+      citationCount: toNumber(field(item, 'WOS_CITE_CNT')),
+      doi: optional(field(item, 'DOI')),
+      url: articleId ? articleUrl(articleId) : null,
+    };
+  });
+
+  const number = (tag: string) =>
+    toNumber(doc.getElementsByTagName(tag)[0]?.textContent ?? '') ?? 0;
+
+  return {
+    articles,
+    totalCount: number('totalCount'),
+    page: number('pageNo') || 1,
+    size: number('recordCnt') || articles.length,
+  };
+};
+
+/** 논문명으로 KCI 논문을 찾는다. 검색어가 없으면 요청하지 않는다. */
 export const searchResearch = async (
   params: ResearchSearchParams,
 ): Promise<ResearchSearchResult> => {
-  const page = params.page ?? 1;
-  const size = params.size ?? 20;
+  const keyword = params.keyword?.trim() ?? '';
+  if (!keyword) return { articles: [], totalCount: 0, page: 1, size: 0 };
 
-  const payload = await api.get<DataGoResponse<KciRawArticle> | string>(
-    KCI_ENDPOINT,
-    {
-      params: {
-        pageNo: page,
-        numOfRows: size,
-        type: 'json',
-        institutionName: UNIVERSITY_NAME,
-        keyword: params.keyword?.trim() || FIELD_KEYWORDS.join(' '),
-      },
+  const xml = await api.get<string>(KCI_ARTICLE_LIST, {
+    params: {
+      pageNo: params.page ?? 1,
+      recordCnt: params.size ?? 20,
+      artiNm: keyword,
     },
-  );
+  });
 
-  const items = unwrapDataGo<KciRawArticle>(payload);
-
-  return {
-    articles: items.map((raw) => ({
-      articleId: raw.articleId ?? crypto.randomUUID(),
-      title: raw.title ?? '(제목 없음)',
-      authors:
-        raw.author
-          ?.split(/[,;]/)
-          .map((name) => name.trim())
-          .filter(Boolean) ?? [],
-      journalName: raw.journalName ?? null,
-      publishedYear: toNumber(raw.pubYear),
-      category: raw.category ?? null,
-      citationCount: toNumber(raw.citationCount),
-      url: raw.url ?? null,
-      openAccess: raw.openAccess === 'Y',
-    })),
-    totalCount: items.length,
-    page,
-    size,
-  };
+  return parseArticles(xml);
 };

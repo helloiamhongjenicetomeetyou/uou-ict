@@ -145,16 +145,25 @@ export interface ResearchSearchParams {
   size?: number;
 }
 
+/**
+ * KCI 논문 한 건.
+ *
+ * 담기는 항목은 [KCI논문 정보 조회] 응답에 실제로 있는 것만이다.
+ * 저자명·학술지명·발행연도는 이 서비스가 주지 않아 아예 두지 않는다.
+ * 키워드·DOI 처럼 비어 오는 일이 잦은 항목은 null 로 두고 화면에서 '—' 로 찍는다.
+ */
 export interface ResearchArticle {
   articleId: string;
   title: string;
-  authors: string[];
-  journalName: string | null;
-  publishedYear: number | null;
-  category: string | null;
+  englishTitle: string | null;
+  keywords: string[];
+  /** '1–34' 형태. 첫 페이지나 끝 페이지가 비면 null. */
+  pages: string | null;
+  /** 원문(PDF)이 KCI 에 올라와 있는지. */
+  fullText: boolean;
   citationCount: number | null;
+  doi: string | null;
   url: string | null;
-  openAccess: boolean;
 }
 
 export interface ResearchSearchResult {
@@ -162,19 +171,6 @@ export interface ResearchSearchResult {
   totalCount: number;
   page: number;
   size: number;
-}
-
-/** 공공데이터포털 오픈API 공통 응답 봉투. */
-export interface DataGoResponse<T> {
-  response: {
-    header: { resultCode: string; resultMsg: string };
-    body: {
-      items: { item: T[] } | T[];
-      numOfRows: number;
-      pageNo: number;
-      totalCount: number;
-    };
-  };
 }
 
 export class OpenDataError extends Error {
