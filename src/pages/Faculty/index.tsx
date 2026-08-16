@@ -84,7 +84,7 @@ const FacultyPage = () => {
 
       <Section
         title="교수진"
-        note="교수·부교수·조교수 · 산학협력중점교원·연구·초빙교수 제외"
+        note="교수·부교수·조교수 · 명예교수·산학협력중점교원·연구·초빙교수 제외"
         action={
           <a
             className={s.sourceLink}
