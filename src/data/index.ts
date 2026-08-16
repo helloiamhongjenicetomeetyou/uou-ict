@@ -3,7 +3,7 @@ import type { OfficialCurriculum } from '@/types';
 
 export { SCHOOL } from './school';
 export { FACULTY, RANK_LABEL } from './faculty';
-export { TUITION } from './publicData';
+export { TUITION, UNIVERSITY_AVERAGE_TUITION } from './publicData';
 export { TRACKS, TRACK_RULES } from './curriculum';
 export { GENERAL_EDUCATION } from './generalEducation';
 

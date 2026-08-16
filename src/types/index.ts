@@ -11,14 +11,14 @@ export interface FacultyMember {
 }
 
 export interface TuitionRecord {
-  schoolType: string;
-  foundation: string;
-  region: string;
-  quotaRaw: number;
+  college: string;
+  /** 조견표에 실린 금액. 학기당이다. */
+  semester: number;
+  /** 2학기 기준으로 계산한 값. */
+  year: number;
   admissionFee: number;
-  averageTuition: number;
-  datasetId: string;
-  baseDate: string;
+  source: string;
+  baseYear: number;
 }
 
 export type TrackId = 'CSE' | 'AI' | 'IICT' | 'SAFETY' | 'MATH';

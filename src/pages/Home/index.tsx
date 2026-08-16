@@ -8,6 +8,7 @@ import {
   SCHOOL,
   TRACKS,
   TUITION,
+  UNIVERSITY_AVERAGE_TUITION,
 } from '@/data';
 import { formatWon } from '@/utils';
 import * as s from './style.css';
@@ -144,22 +145,31 @@ const HomePage = () => {
 
       <Section
         title="등록금"
-        note="대학 단위 · 학부별로는 공시되지 않음"
-        datasetId={TUITION.datasetId}
-        datasetUrl="https://www.data.go.kr/data/3071171/fileData.do"
-        datasetLabel="한국장학재단 대학별 평균등록금"
-        baseDate={TUITION.baseDate}
+        note={`${TUITION.college} 기준`}
+        datasetUrl={TUITION.source}
+        datasetLabel={`울산대학교 ${TUITION.baseYear}학년도 등록금 조견표`}
+        baseDate={`${TUITION.baseYear}학년도`}
       >
-        <div className={s.pairGrid}>
+        <div className={s.statGrid}>
           <StatCard
-            label="연간 평균등록금"
-            value={formatWon(TUITION.averageTuition)}
-            hint={`${TUITION.foundation} · ${TUITION.region}`}
+            label="학기당"
+            value={formatWon(TUITION.semester)}
+            hint="조견표에 실린 금액"
+          />
+          <StatCard
+            label="연간"
+            value={formatWon(TUITION.year)}
+            hint="2학기 기준"
           />
           <StatCard
             label="입학금"
             value={formatWon(TUITION.admissionFee)}
             hint="폐지 완료"
+          />
+          <StatCard
+            label="대학 평균"
+            value={formatWon(UNIVERSITY_AVERAGE_TUITION.year)}
+            hint="전 계열 연간 · 한국장학재단"
           />
         </div>
       </Section>
